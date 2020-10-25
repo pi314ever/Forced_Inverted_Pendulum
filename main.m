@@ -1,50 +1,47 @@
 %% Inverted Forced Double Pendulum Main
 % Project 3
-%% Setup
+%% Default value simulation
 clc;clear;close all
-% Single pendulum
-P.g = 9.81; % Gravity [m/s^2]
-P.l = 1; % Lengths [m]
-P.m = 1; % Masses [kg]
-P.ampl = 0.1; % Amplitude [m]
-P.freq = 100*2*pi(); % Frequency [rad/s]
-th0 = (20)*pi()/180; % Initial angles [rad]
-thd0 = 0; % Initial angular rate [rad/s]
-h = 0.01; % Time step
-tspan = [0 20]; % Time span [s]
 
-% % Double pendulum
-% P.g = 9.81; % Gravity [m/s^2]
-% P.l = [1 1]; % Lengths [m]
-% P.m = [1 1]; % Masses [kg]
-% P.ampl = 0.1; % Amplitude [m]
-% P.freq = 300; % Frequency [rad/s]
-% th0 = [0 1]*pi()/180; % Initial angles [rad]
-% thd0 = [0 0]; % Initial angular rate [rad/s]
-% tspan = [0 10]; % Time span [s]
+ampl_default = 0.1; % Amplitude x[m]
+freq_default = 100*2*pi(); % Frequency [rad/s]
+th0_default = (20)*pi()/180; % Initial angles [rad]
+thd0_default = 0; % Initial angular rate [rad/s]
+h_default = 0.01; % Time step
 
-y0 = [th0 thd0];
-%% Simulate
-solRK = RK4(@(t,x)Inverted_Single(t,x,P),tspan,y0,h);
-solABM = ABM4(@(t,x)Inverted_Single(t,x,P),tspan,y0,h);
+y0_default = [th0_default thd0_default];
 
-timeRK = solRK.x;
-stateRK = solRK.y;
-timeABM = solABM.x;
-stateABM = solABM.y;
-% time = linspace(tspan(1),solRK.x(end),1000);
-% state = deval(solRK,time);
-%% Plots
-figure % Time plot
-plot(timeRK,stateRK,timeABM,stateABM,'--','Linewidth',2)
-title('Time plot of states')
-xlabel('Time [s]')
-ylabel('Angle [rad]/Angular rate [rad/s]')
-legend('\theta_{RK}','\theta''_{RK}','\theta_{ABM}','\theta''_{ABM}')
+RKABM_Single(ampl_default,freq_default,y0_default,h_default);
+%% Changing Amplitude
+ampl = [0 0.3];
+for ii = 1:2
+    RKABM_Single(ampl(ii),freq_default,y0_default,h_default);
+end
 
-figure % Phase portrait
-plot(stateRK(1,:),stateRK(2,:),stateABM(1,:),stateABM(2,:),'--','Linewidth',2)
-title('Phase portrait')
-xlabel('Angle [rad]')
-ylabel('Angular rate [rad/s]')
-legend('RK4','ABM4')
+%% Changing Frequency
+freq = [10 1000]*2*pi();
+for ii = 1:2
+    RKABM_Single(ampl_default,freq(ii),y0_default,h_default);
+end
+
+%% Changing theta_0
+th0 = [10 30]*pi()/180;
+y0 = y0_default;
+for ii = 1:2
+    y0(1) = th0(ii);
+    RKABM_Single(ampl_default,freq_default,y0,h_default);
+end
+
+%% Changing thetad_0
+thd0 = [10 30]*pi()/180;
+y0 = y0_default;
+for ii = 1:2
+    y0(2) = thd0(ii);
+    RKABM_Single(ampl_default,freq_default,y0,h_default);
+end
+
+%% Changing time step
+h = [0.1 0.001];
+for ii = 1:2
+    RKABM_Single(ampl_default,freq_default,y0_default,h(ii));
+end
