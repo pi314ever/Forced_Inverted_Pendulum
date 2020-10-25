@@ -29,7 +29,8 @@ ylabel('Angle [rad]/Angular rate [rad/s]')
 legend('\theta_{RK}','\theta''_{RK}','\theta_{ABM}','\theta''_{ABM}')
 Label = sprintf('Ampl = %.2f [m]\nFreq = %.2f [Hz]\ntheta_0 = %.2f [deg]\ntheta_0'' = %.2f [deg/s]\nh = %f [s]',...
     ampl,freq/(2*pi),y0(1)*180/pi(),y0(2)*180/pi(),h);
-annotation('textbox',[0.04 0.8 0 0],'string',Label,'FitBoxToText','on')
+annotation('textbox',[0.01 0.92 0 0],'string',Label,'FitBoxToText','on','Fontsize',14)
+set(gca,'fontsize',18)
 
 figure % Phase portrait
 plot(stateRK(1,:),stateRK(2,:),'b',stateABM(1,:),stateABM(2,:),'r--','Linewidth',2)
@@ -39,6 +40,7 @@ ylabel('Angular rate [rad/s]')
 legend('RK4','ABM4')
 Label = sprintf('Ampl = %.2f [m]\nFreq = %.2f [Hz]\ntheta_0 = %.2f [deg]\ntheta_0'' = %.2f [deg/s]\nh = %f [s]',...
     ampl,freq/(2*pi),y0(1)*180/pi(),y0(2)*180/pi(),h);
-annotation('textbox',[0.04 0.8 0 0],'string',Label,'FitBoxToText','on')
+annotation('textbox',[0.01 0.92 0 0],'string',Label,'FitBoxToText','on','Fontsize',14)
+set(gca,'fontsize',18)
 end
 
