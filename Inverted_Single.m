@@ -8,6 +8,6 @@ g = P.g;
 ydd = -Ampl*Freq^2*sin(Freq*t); % Forcing motion
 I = 1/12*m.*l.^2;
 
-dx = [x(2) (m*ydd*l/2*sin(x(1))-l/2*m*g)/
+dx = [x(2);(m*ydd*l/2*sin(x(1))+l/2*m*g*sin(x(1)))/(m*(l/2)^2+I)];
 end
 
